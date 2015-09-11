@@ -34,3 +34,7 @@ section:first-child {
   color: #900;
   display: none;
 }
+
+body.embedded #footer {
+  display: none;
+}

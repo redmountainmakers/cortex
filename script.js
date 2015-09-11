@@ -22,8 +22,8 @@ function doRequest(method, path, cb) {
 }
 
 $(function() {
-    if (/hide_footer/.test(document.location.search)) {
-        $('#footer').hide();
+    if (/embedded=true/.test(document.location.search)) {
+        $('body').addClass('embedded');
     }
 
     doRequest('GET', '/', function(err, data) {
