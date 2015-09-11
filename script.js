@@ -22,6 +22,10 @@ function doRequest(method, path, cb) {
 }
 
 $(function() {
+    if (/hide_footer/.test(document.location.search)) {
+        $('#footer').hide();
+    }
+
     doRequest('GET', '/', function(err, data) {
         if (err) {
 
