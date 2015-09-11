@@ -141,6 +141,7 @@ void sendHttpResponse(TCPClient client, const char * json) {
     client.println("HTTP/1.1 200 OK");
     client.println("Content-Type: application/json");
     client.println("Access-Control-Allow-Origin: http://www.redmountainmakers.org");
+    client.println("Cache-Control: no-cache");
     client.println("Connection: close");
     client.println();
     client.println(json);
