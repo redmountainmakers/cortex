@@ -1,0 +1,36 @@
+html, body {
+  font-family: Verdana, Arial, sans-serif;
+}
+a {
+  text-decoration: none;
+  color: blue;
+  outline: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+html.touch a:hover {
+  text-decoration: none;
+}
+a img {
+  border: none;
+}
+
+section {
+  margin-top: 15px;
+  padding: 15px 15px 0 15px;
+  border-top: 2px solid #ccc;
+  max-width: 600px;
+}
+section:first-child {
+  margin-top: 0;
+  border-top: none;
+}
+#controls button {
+  font-size: 120%;
+  margin: 8px;
+}
+#error {
+  color: #900;
+  display: none;
+}
