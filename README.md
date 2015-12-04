@@ -5,5 +5,5 @@ a Photon microcontroller.  So far it controls the ceiling lights via either a
 button or a HTTP server that speaks JSON over the space's Wifi network.
 
 See the
-[project's wiki page](http://wiki.redmountainmakers.org/wiki/Project:Cortex)
+[project's wiki page](http://wiki.redmountainmakers.org/wiki/Project:Lights)
 for more information.
