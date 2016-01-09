@@ -80,7 +80,7 @@ void processHttpRequest(TCPClient client) {
         
         sprintf(
             httpResponseBuffer,
-            "{\"status\":\"ok\",\"lights\":\"%s\",\"message\":\"POST here instead to toggle\"}",
+            "{\"status\":\"ok\",\"lights\":\"%s\",\"message\":\"POST /on|/off|/toggle\"}",
             ledState == HIGH ? "on" : "off"
         );
         sendHttpResponse(client, httpResponseBuffer);
