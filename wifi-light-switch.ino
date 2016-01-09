@@ -1,8 +1,7 @@
 int led1 = D6; // connected to solid-state relay
 int led2 = D7; // the little blue LED built into the board
-int buttonLow = D2;
-int buttonInput = D1;
-int buttonHigh = D0;
+int buttonLow = D4;
+int buttonInput = D5;
 
 int ledState = HIGH;
 
@@ -20,14 +19,8 @@ void setup() {
     pinMode(buttonLow, OUTPUT);
     digitalWrite(buttonLow, LOW);
     
-    pinMode(buttonInput, INPUT);
+    pinMode(buttonInput, INPUT_PULLUP);
     
-    // Writing an INPUT mode pin HIGH does not seem to work here,
-    // like I hear it does on Arduino
-    // so we're using an extra pin
-    pinMode(buttonHigh, OUTPUT);
-    digitalWrite(buttonHigh, HIGH);
-
     pinMode(led1, OUTPUT);
     pinMode(led2, OUTPUT);
     setState(HIGH);
