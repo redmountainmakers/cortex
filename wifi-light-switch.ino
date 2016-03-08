@@ -8,6 +8,13 @@ int ledState = HIGH;
 TCPServer server = TCPServer(80);
 char addr[16];
 
+int countButtonPress = 0;
+int countButtonShort = 0;
+int countHttpOn      = 0;
+int countHttpOff     = 0;
+int countHttpToggle  = 0;
+int buttonDelay      = 0;
+
 const int MAX_HTTP_LENGTH = 255;
 
 char httpRequestBuffer[MAX_HTTP_LENGTH + 1];
@@ -29,6 +36,14 @@ void setup() {
     sprintf(addr, "%u.%u.%u.%u", localIP[0], localIP[1], localIP[2], localIP[3]);
     Spark.variable("Address", addr, STRING);
     Spark.variable("Request", httpRequestBuffer, STRING);
+    
+    Particle.variable("cButtonPress", &countButtonPress, INT);
+    Particle.variable("cButtonShort", &countButtonShort, INT);
+    Particle.variable("cHttpOn"     , &countHttpOn     , INT);
+    Particle.variable("cHttpOff"    , &countHttpOff    , INT);
+    Particle.variable("cHttpToggle" , &countHttpToggle , INT);
+    Particle.variable("buttonDelay" , &buttonDelay     , INT);
+    
     server.begin();
 }
 
@@ -42,9 +57,19 @@ void loop() {
     delay(100);
     
     if (digitalRead(buttonInput) == LOW) {
-        setState(ledState == HIGH ? LOW : HIGH);
+        int start = millis();
+        bool registeredButtonPress = false;
         while (digitalRead(buttonInput) == LOW) {
-            delay(100);
+            delay(10);
+            buttonDelay = millis() - start;
+            if (buttonDelay >= 50 && !registeredButtonPress) {
+                countButtonPress++;
+                registeredButtonPress = true;
+                setState(ledState == HIGH ? LOW : HIGH);
+            }
+        }
+        if (!registeredButtonPress) {
+            countButtonShort++;
         }
     }
     
@@ -88,6 +113,7 @@ void processHttpRequest(TCPClient client) {
     } else if (httpRequestIs("POST /on")) {
         // Turn the lights on
         
+        countHttpOn++;
         setState(HIGH);
         sprintf(
             httpResponseBuffer,
@@ -99,6 +125,7 @@ void processHttpRequest(TCPClient client) {
     } else if (httpRequestIs("POST /off")) {
         // Turn the lights off
         
+        countHttpOff++;
         setState(LOW);
         sprintf(
             httpResponseBuffer,
@@ -110,6 +137,7 @@ void processHttpRequest(TCPClient client) {
     } else if (httpRequestIs("POST /toggle")) {
         // Toggle lights
         
+        countHttpToggle++;
         setState(ledState == HIGH ? LOW : HIGH);
         sprintf(
             httpResponseBuffer,
